@@ -4,6 +4,7 @@ const express = require('express');
 const http = require('http');
 const cors = require('cors');
 const { Server } = require('socket.io');
+const path = require('path'); // Import path module 
 
 const app = express();
 app.use(cors());
@@ -38,6 +39,10 @@ io.on('connection', socket => {
         delete users[socket.id];
     });
 });
+
+// Serve static files from the root directory
+const publicDirectoryPath = path.join(__dirname);
+app.use(express.static(publicDirectoryPath));
 
 server.listen(8000, () => {
     console.log('Server is running on port 8000');
